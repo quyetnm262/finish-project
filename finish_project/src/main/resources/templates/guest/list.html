@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/guest/common/header::head"></head>
+  <body>
+  <header th:include="/guest/common/navigation::header"></header>
+
+    <!-- Page Content -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+
+            <h1 >Products</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="services">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-3" th:each="product : ${products}" >
+            <div class="service-item">
+              <img  th:src="'data:image/png;base64,'+${product.avatarUrl}" alt="">
+              <div class="down-content">
+                <h4 th:text = "${product.name}"></h4>
+                <div style="margin-bottom:10px;">
+                  <span>
+                      <del><p th:text = "'$'+${product.oldPrice}"></p></del><p th:text = "'$'+${product.price}"></p>
+                  </span>
+                </div>
+                <p> <p th:text = "${product.shortDescription}"></p> </p>
+                <a href="product-details.html" class="filled-button">View More</a>
+              </div>
+            </div>
+
+            <br>
+          </div>
+        </div>
+
+        <br>
+        <br>
+
+        <nav>
+          <ul id="pagination" class="pagination pagination-lg justify-content-center"></ul>
+        </nav>
+
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <!-- Footer Starts Here -->
+<footer th:include="/guest/common/footer::footer"></footer>
+    
+
+
+  </body>
+</html>
