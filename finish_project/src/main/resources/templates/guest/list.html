@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col-md-12">
 
-            <h1 >Products</h1>
+            <h1 style="color: white">Products</h1>
           </div>
         </div>
       </div>
@@ -21,18 +21,36 @@
       <div class="container">
         <div class="row">
 
-          <div class="col-md-3" th:each="product : ${products}" >
+          <div class="col-6 col-sm-3" th:each="product : ${products}" >
             <div class="service-item">
-              <img  th:src="'data:image/png;base64,'+${product.avatarUrl}" alt="">
+              <img style="width: 300px; height: 400px"  th:src="'data:image/png;base64,'+${product.avatarUrl}" alt="">
               <div class="down-content">
-                <h4 th:text = "${product.name}"></h4>
-                <div style="margin-bottom:10px;">
+
+                <div class="row">
+
+                  <div style="width: 300px; height: 100px" class="col-30 col-sm-12">
+                    <h4 th:text = "${product.name}"></h4>
+                  </div>
+                  <div class="w-100 d-none d-md-block"></div>
+
+                  <div style="width: 300px; height: 100px" class="col-30 col-sm-12">
+                    <div style="margin-bottom:10px;">
                   <span>
                       <del><p th:text = "'$'+${product.oldPrice}"></p></del><p th:text = "'$'+${product.price}"></p>
                   </span>
-                </div>
-                <p> <p th:text = "${product.shortDescription}"></p> </p>
-                <a th:href="@{'/products/detail/'+ ${product.name}}"  class="filled-button">View More</a>
+                    </div>
+                  </div>
+                  <div class="w-100 d-none d-md-block"></div>
+
+                  <div style="width: 300px; height: 100px" class="col-30 col-sm-12">
+                    <p th:text = "${product.shortDescription}"></p>
+                  </div>
+                  <div class="w-100 d-none d-md-block"></div>
+
+                  <div style="width: 300px; height: 100px" class="col-30 col-sm-12">
+                    <a th:href="@{'/products/detail/'+ ${product.name}}"  class="filled-button">View More</a>
+                  </div>
+
               </div>
             </div>
 

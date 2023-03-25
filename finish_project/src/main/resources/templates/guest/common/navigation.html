@@ -21,7 +21,8 @@
 
                             <div class="dropdown-menu" >
                                 <div th:each="category : ${categorys}">
-                                    <a class="dropdown-item"  th:href="@{/products/{categoryId}(categoryId=${category.getId()})}" th:text="${category.getName()}"></a>
+                                    <a class="dropdown-item" th:if="${category.id == 1}" th:href="@{/products}" th:text="${category.getName()}"></a>
+                                    <a class="dropdown-item" th:if="${category.id != 1}"  th:href="@{/products/{categoryId}(categoryId=${category.getId()})}" th:text="${category.getName()}"></a>
 
                                 </div>
 
