@@ -3,6 +3,7 @@ package vn.com.t3h.finish_project.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import vn.com.t3h.finish_project.entity.RoleEntity;
 import vn.com.t3h.finish_project.entity.UserEntity;
@@ -41,12 +42,22 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public UserEntity findByUserName(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public UserDto getUserById(Integer id) {
+        UserEntity entity = userRepository.findById(id).get();
+        return userEntityToDto(entity);
+    }
+
+    @Override
     public UserDto createUser(UserDto userDto) {
 
         UserEntity userEntity = userDtoToEntity(userDto);
         userEntity = userRepository.save(userEntity);
-        UserDto dto = userEntityToDto(userEntity);
-        return dto;
+        return userEntityToDto(userEntity);
     }
 
     @Override
@@ -55,14 +66,15 @@ public class UserServiceImpl implements IUserService {
         UserEntity entity = userDtoToEntity(userDto);
         entity.setId(id);
         entity = userRepository.save(entity);
-        UserDto dto = userEntityToDto(entity);
-        return dto;
+        return userEntityToDto(entity);
     }
 
     @Override
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }
+
+
 
 
 

@@ -7,7 +7,7 @@ public class UserDto extends AbtractDto{
 
     private String fullName;
 
-    private Integer gender;
+    private String gender;
 
     private String email;
 

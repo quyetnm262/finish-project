@@ -20,14 +20,6 @@ public class UserController {
 
     /*----------Inject end-------------------*/
 
-    @GetMapping
-    public ResponseEntity<?> getUsers(){
-        return ResponseEntity.ok(BaseResponse.builder()
-                .message(HttpStatus.OK.name())
-                .messageCode(HttpStatus.OK.value())
-                .data(iUserService.getUsers())
-                .build());
-    }
 
     @PostMapping
     public ResponseEntity<?> postUser(@RequestBody UserDto userDto){
@@ -38,12 +30,12 @@ public class UserController {
                 .build());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> putUser(@RequestBody UserDto userDto, @PathVariable Integer id){
+    @PutMapping
+    public ResponseEntity<?> putUser(@RequestBody UserDto userDto){
         return ResponseEntity.ok(BaseResponse.builder()
                 .message(HttpStatus.OK.name())
                 .messageCode(HttpStatus.OK.value())
-                .data(iUserService.updateUser(userDto, id))
+                .data(iUserService.updateUser(userDto, userDto.getId()))
                 .build());
     }
 

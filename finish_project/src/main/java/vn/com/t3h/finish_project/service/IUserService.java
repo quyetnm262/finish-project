@@ -1,7 +1,7 @@
 package vn.com.t3h.finish_project.service;
 
 
-import org.apache.catalina.User;
+import vn.com.t3h.finish_project.entity.UserEntity;
 import vn.com.t3h.finish_project.model.dto.UserDto;
 
 import java.util.List;
@@ -9,6 +9,10 @@ import java.util.List;
 public interface IUserService {
 
     List<UserDto> getUsers();
+
+    UserEntity findByUserName(String username);
+
+    UserDto getUserById(Integer id);
 
     UserDto createUser(UserDto userDto);
 

@@ -8,6 +8,8 @@ public interface IRoleService {
 
     List<RoleDto> getRoles();
 
+    RoleDto getRoleById(Integer id);
+
     RoleDto createRole(RoleDto roleDto);
 
     RoleDto updateRole(RoleDto roleDto, Integer id);

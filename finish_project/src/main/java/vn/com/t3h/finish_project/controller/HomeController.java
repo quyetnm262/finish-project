@@ -19,6 +19,6 @@ public class HomeController {
     public String home(Model model){
         List<CategoryDto> categoryDtos = iCategoryService.getCategories();
         model.addAttribute("categorys",categoryDtos);
-        return "home";
+        return "/guest/home";
     }
 }

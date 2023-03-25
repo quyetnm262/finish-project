@@ -15,7 +15,7 @@ public class UserEntity extends BaseEntity{
     private String fullName;
 
     @Column(name = "gender")
-    private Integer gender;
+    private String gender;
 
     @Column(name = "email")
     private String email;

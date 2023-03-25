@@ -53,12 +53,12 @@ public class ProductController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> putProduct(@RequestBody ProductDto dto, @PathVariable Integer id){
+    @PutMapping("")
+    public ResponseEntity<?> putProduct(@RequestBody ProductDto dto){
         return ResponseEntity.ok(BaseResponse.builder()
                 .message(HttpStatus.OK.name())
                 .messageCode(HttpStatus.OK.value())
-                .data(iProductService.updateProduct(dto,id))
+                .data(iProductService.updateProduct(dto, dto.getId()))
                 .build());
     }
 

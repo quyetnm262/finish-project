@@ -8,4 +8,5 @@ import vn.com.t3h.finish_project.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     UserEntity findByFullName(String fullName);
+    UserEntity findByUsername(String username);
 }

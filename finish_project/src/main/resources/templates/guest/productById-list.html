@@ -33,7 +33,7 @@
                   </span>
                 </div>
                 <p> <p th:text = "${product.shortDescription}"></p> </p>
-                <a href="product-details.html" class="filled-button">View More</a>
+                <a th:href="@{'/products/detail/'+ ${product.name}}"  class="filled-button">View More</a>
               </div>
             </div>
 

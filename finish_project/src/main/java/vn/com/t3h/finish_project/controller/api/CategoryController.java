@@ -47,12 +47,12 @@ public class CategoryController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> putCategory(@RequestBody CategoryDto categoryDto, @PathVariable Integer id){
+    @PutMapping
+    public ResponseEntity<?> putCategory(@RequestBody CategoryDto categoryDto){
         return ResponseEntity.ok(BaseResponse.builder()
                 .message(HttpStatus.OK.name())
                 .messageCode(HttpStatus.OK.value())
-                .data(iCategoryService.updateCategory(categoryDto,id))
+                .data(iCategoryService.updateCategory(categoryDto, categoryDto.getId()))
                 .build());
     }
 

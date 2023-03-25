@@ -42,6 +42,12 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
+    public RoleDto getRoleById(Integer id) {
+        RoleEntity roleEntity = roleRepository.findById(id).get();
+        return roleEntityToDto(roleEntity);
+    }
+
+    @Override
     public RoleDto createRole(RoleDto roleDto) {
 
         RoleEntity entity = roleDtoToEntity(roleDto);

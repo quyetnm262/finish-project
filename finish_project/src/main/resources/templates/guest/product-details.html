@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head th:include="/guest/common/header::head"></head>
+
+
+  <body>
+  <header th:include="/guest/common/navigation::header"></header>
+
+    <!-- Page Content -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 th:text="${product.getTitle()}"></h1>
+            <h1>
+              <del><span th:text="${product.getOldPrice()}"></span></del>
+              <span th:text="${product.getPrice()}"></span>
+            </h1>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div>
+              <img  th:src="'data:image/png;base64,'+${product.getImage()}" alt="" class="img-fluid wc-image">
+            </div>
+
+            <br>
+
+            <br>
+          </div>
+
+          <div class="col-md-5">
+            <div class="sidebar-item recent-posts">
+              <div class="sidebar-heading">
+                <h4>Info</h4>
+              </div>
+
+              <div class="content">
+                <p th:text="${product.getShortDescription()}"></p>
+              </div>
+            </div>
+
+            <br>
+            <br>
+          
+            <h4>Add to Cart</h4>
+
+            <br>
+
+            <form action="" method="post">
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label for="">Extra 1</label>
+                    <select class="form-control">
+                      <option value="0">Extra A</option>
+                      <option value="0">Extra B</option>
+                      <option value="0">Extra C</option>
+                      <option value="0">Extra D</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label for="">Quantity</label>
+                    <input type="text" value="1" required="" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <a href="#"class="filled-button">Add to Cart</a>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <br>
+          </div>
+        </div>
+
+        <br>
+
+        <h4>Description</h4>
+        <div><p th:text="${product.getDescription()}">
+
+        </p></div>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+
+
+    <footer th:include="/guest/common/footer::footer"></footer>
+  </body>
+</html>

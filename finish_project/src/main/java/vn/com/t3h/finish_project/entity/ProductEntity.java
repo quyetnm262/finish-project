@@ -1,11 +1,12 @@
 package vn.com.t3h.finish_project.entity;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
+
 
 @Entity
 @Table(name = "product")
@@ -19,8 +20,9 @@ public class ProductEntity extends BaseEntity{
     @Column(name = "avatarUrl")
     private String avatarUrl;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+    @Column(name = "image")
+    private String image;
+
 
     @Column(name = "price")
     private Double price;
@@ -30,6 +32,9 @@ public class ProductEntity extends BaseEntity{
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "shortDescription")
     private String shortDescription;

@@ -7,10 +7,11 @@ public class ProductDto extends AbtractDto{
 
     private String productCode;
     private String avatarUrl;
-    private Integer quantity;
+    private String image;
     private Double price;
     private Double oldPrice;
     private String name;
+    private String title;
     private String shortDescription;
     private String description;
     private Integer categoryId;

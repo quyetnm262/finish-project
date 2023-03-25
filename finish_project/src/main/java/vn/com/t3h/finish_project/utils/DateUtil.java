@@ -10,7 +10,7 @@ import java.util.Date;
 @Slf4j
 public class DateUtil{
 
-    public static final String FORMAT_DATE = "dd/MM/yyyy";
+    public static final String FORMAT_DATE = "yyyy-mm-dd";
 
     public static Date convertStringToDate(String str,String formatDate) throws Exception {
         if (str == null) {

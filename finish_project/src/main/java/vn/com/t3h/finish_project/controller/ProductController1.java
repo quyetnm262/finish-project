@@ -32,7 +32,7 @@ public class ProductController1 {
     }
 
     @GetMapping("/products/{categoryId}")
-    public String getProductsById(Model model, @PathVariable Integer categoryId){
+    public String getProductsByCategoryId(Model model, @PathVariable Integer categoryId){
         List<ProductDto> listProducts = iProductService.getProductsByCategoryId(categoryId);
         CategoryDto categoryDto = iCategoryService.getCategoryById(categoryId);
         List<CategoryDto> categoryDtos = iCategoryService.getCategories();
@@ -41,4 +41,15 @@ public class ProductController1 {
         model.addAttribute("products",listProducts);
         return "guest/productById-list";
     }
+
+    @GetMapping("/products/detail/{productName}")
+    public String getProductsById(Model model, @PathVariable String productName){
+        List<CategoryDto> categoryDtos = iCategoryService.getCategories();
+        model.addAttribute("categorys",categoryDtos);
+        ProductDto productDto = iProductService.getProductByName(productName);
+        model.addAttribute("product",productDto);
+        return "guest/product-details";
+    }
+
+
 }

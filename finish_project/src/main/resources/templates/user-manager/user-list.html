@@ -45,7 +45,7 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="user-list.html" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="user-list.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                 </div>
             </nav>
         </div>
@@ -70,7 +70,7 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="user-list.html" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -164,38 +164,35 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Recent Salse</h6>
-                        <a href="">Show All</a>
+                        <a class="btn btn-sm btn-primary" th:href="@{/admin/user/user-info}">Add new user</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-dark">
-                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                                    <th scope="col">Id</th>
                                     <th scope="col">FullName</th>
                                     <th scope="col">Gender</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">BirthDay</th>
                                     <th scope="col">UserName</th>
                                     <th scope="col">RoleName</th>
-                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="user : ${users}">
-                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td id="idUser" th:text="${user.id}"></td>
                                     <td th:text="${user.fullName}"></td>
-                                    <td>
-                                        <span th:if="${user.gender} == 1">Male</span>
-                                        <span th:unless="${user.gender} == 1">FeMale</span>
-                                    </td>
+                                    <td th:text="${user.gender}"></td>
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.birthdayStr}"></td>
                                     <td th:text="${user.username}"></td>
                                     <td th:each="role : ${user.roleNames}">
                                         <span th:text="${role}"></span>
                                     </td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    <td><a class="btn btn-sm btn-primary" th:href="@{/admin/user/user-info/{id}(id=${user.getId()})}">Detail</a></td>
+                                    <td><button id="BtnDeleteUser" th:onclick="'deleteUser(' + ${user.getId()} + ')'" class="btn btn-sm btn-primary">Delete</button></td>
+
                                 </tr>
 
                             </tbody>
@@ -246,5 +243,30 @@
     <!-- Template Javascript -->
     <script th:src="@{/admin/js/main.js}"></script>
 </body>
+
+<script>
+
+    $('#BtnDeleteUser').click(function (e){
+        var id = $('#idUser').val();
+        deleteUser(id);
+    });
+
+
+    function deleteUser(id) {
+        $.ajax({
+            url: '/api/user/'+id,
+            type: 'DELETE',
+            contentType: 'application/json',
+            success: function (result) {
+                console.log(result);
+                window.location.href = "/admin/user";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+</script>
 
 </html>

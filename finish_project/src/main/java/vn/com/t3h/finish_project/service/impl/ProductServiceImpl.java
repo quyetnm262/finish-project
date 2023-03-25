@@ -3,6 +3,9 @@ package vn.com.t3h.finish_project.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.com.t3h.finish_project.entity.CategoryEntity;
 import vn.com.t3h.finish_project.entity.ProductEntity;
@@ -40,12 +43,35 @@ public class ProductServiceImpl implements IProductService {
         return productDtoList;
     }
 
+//    @Override
+//    public Page<ProductEntity> pageProducts(int index) {
+//
+//        Pageable pageable = PageRequest.of(index,5);
+//        Page<ProductEntity> productEntityPage = productRepository.pageProduct(pageable);
+//
+//        return productEntityPage;
+//    }
+
     @Override
     public List<ProductDto> getProductsByCategoryId(Integer categoryId) {
         List<ProductDto> list = this.getProducts();
         List<ProductDto> productDtoList = list.stream().filter(productDto -> productDto.getCategoryId().equals(categoryId))
                 .collect(Collectors.toList());
         return productDtoList;
+    }
+
+    @Override
+    public ProductDto getProductByName(String name) {
+        ProductEntity entity = productRepository.findByName(name);
+
+        return productEntityToDto(entity);
+    }
+
+    @Override
+    public ProductDto getProductById(Integer id) {
+
+        ProductEntity entity = productRepository.findById(id).get();
+        return productEntityToDto(entity);
     }
 
     @Override

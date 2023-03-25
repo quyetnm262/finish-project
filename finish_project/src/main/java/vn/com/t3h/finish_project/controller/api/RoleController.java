@@ -37,12 +37,12 @@ public class RoleController {
                 .build());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> putRole(@RequestBody RoleDto dto, @PathVariable Integer id){
+    @PutMapping
+    public ResponseEntity<?> putRole(@RequestBody RoleDto dto){
         return ResponseEntity.ok(BaseResponse.builder()
                 .message(HttpStatus.OK.name())
                 .messageCode(HttpStatus.OK.value())
-                .data(iRoleService.updateRole(dto,id))
+                .data(iRoleService.updateRole(dto,dto.getId()))
                 .build());
     }
 
