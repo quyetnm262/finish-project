@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>DASHMIN - Bootstrap Admin Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link th:href="@{img/favicon.ico}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link th:href="@{/admin_static/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/admin_static/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:href="@{/admin_static/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/admin_static/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+
+        <div th:include="/user-admin/common/sidebar"></div>
+
+
+
+        <!-- Content Start -->
+        <div class="content">
+
+            <div th:include="/user-admin/common/nav"></div>
+
+
+            <!-- Recent Sales Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <a class="btn btn-sm btn-primary" th:href="@{admin_static}">Add new user</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col">Id</th>
+                                    <th scope="col">FullName</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">BirthDay</th>
+                                    <th scope="col">UserName</th>
+                                    <th scope="col">RoleName</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td id="idUser" th:text="${user.id}"></td>
+                                    <td th:text="${user.fullName}"></td>
+                                    <td th:text="${user.gender}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.birthdayStr}"></td>
+                                    <td th:text="${user.username}"></td>
+                                    <td th:each="role : ${user.roleNames}">
+                                        <span th:text="${role}"></span>
+                                    </td>
+                                    <td><a class="btn btn-sm btn-primary" th:href="@{admin_static}">Detail</a></td>
+                                    <td><button id="BtnDeleteUser" th:onclick="'deleteUser(' + ${user.getId()} + ')'" class="btn btn-sm btn-primary">Delete</button></td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Recent Sales End -->
+        </div>
+    </div>
+            <footer th:include="/user-admin/common/footer::footer"></footer>
+</body>
+
+<script>
+
+    $('#BtnDeleteUser').click(function (e){
+        var id = $('#idUser').val();
+        deleteUser(id);
+    });
+
+
+    function deleteUser(id) {
+        $.ajax({
+            url: '/api/user/'+id,
+            type: 'DELETE',
+            contentType: 'application/json',
+            success: function (result) {
+                console.log(result);
+                window.location.href = "../../static/admin_static/user";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+</script>
+
+</html>

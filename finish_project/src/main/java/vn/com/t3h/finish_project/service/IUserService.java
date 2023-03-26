@@ -19,5 +19,6 @@ public interface IUserService {
     UserDto updateUser(UserDto userDto, Integer id);
 
     void deleteUser(Integer id);
+    void save(UserDto userDto);
 
 }

@@ -1,6 +1,8 @@
 package vn.com.t3h.finish_project.controller.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,24 +22,45 @@ public class RoleManagerController {
     @Autowired
     private IRoleService iRoleService;
 
+    @Autowired
+    private IUserService iUserService;
+
     @GetMapping("/role-info/{id}")
-    private String getRoleInfo(Model model, @PathVariable Integer id){
+    private String getRoleInfo(Model model, @PathVariable Integer id, Authentication authentication){
         RoleDto dto = iRoleService.getRoleById(id);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        String role = userDetails.getAuthorities().toString();
+        String name = iUserService.findByUserName(username).getFullName();
+        model.addAttribute("name",name);
+        model.addAttribute("role",role);
         model.addAttribute("role",dto);
 
-        return "/role-manager/role-info";
+        return "/user-admin/role-manager/role-info";
     }
     @GetMapping("/role-info")
-    private String detailRole(Model model){
+    private String detailRole(Model model, Authentication authentication){
         RoleDto dto = new RoleDto();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        String role = userDetails.getAuthorities().toString();
+        String name = iUserService.findByUserName(username).getFullName();
+        model.addAttribute("name",name);
+        model.addAttribute("role",role);
         model.addAttribute("role",dto);
-        return "/role-manager/role-info";
+        return "/user-admin/role-manager/role-info";
     }
     @GetMapping
-    private String getRoles(Model model){
+    private String getRoles(Model model, Authentication authentication){
         List<RoleDto> list = iRoleService.getRoles();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        String role = userDetails.getAuthorities().toString();
+        String name = iUserService.findByUserName(username).getFullName();
+        model.addAttribute("name",name);
+        model.addAttribute("role",role);
         model.addAttribute("roles",list);
-        return "/role-manager/role-list";
+        return "/user-admin/role-manager/role-list";
     }
 
 }

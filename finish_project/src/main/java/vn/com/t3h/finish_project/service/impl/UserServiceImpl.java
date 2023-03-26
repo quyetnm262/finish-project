@@ -74,8 +74,11 @@ public class UserServiceImpl implements IUserService {
         userRepository.deleteById(id);
     }
 
-
-
+    @Override
+    public void save(UserDto userDto){
+        UserEntity userEntity =  userDtoToEntity(userDto);
+        userRepository.save(userEntity);
+    }
 
 
     /*----------Converter start-------------------*/

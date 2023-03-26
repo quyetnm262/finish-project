@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/user-admin/common/head::head"></head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+
+        <div th:include="/user-admin/common/sidebar"></div>
+
+        <!-- Content Start -->
+        <div class="content">
+
+            <div th:include="/user-admin/common/nav"></div>
+
+            <!-- Recent Sales Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <a class="btn btn-sm btn-primary" th:href="@{admin_static}">Add new role</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Name</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="role : ${roles}">
+                                    <td id="idRole" th:text="${role.id}"></td>
+                                    <td th:text="${role.name}"></td>
+
+                                    <td><a class="btn btn-sm btn-primary" th:href="@{admin_static}">Detail</a></td>
+                                    <td><button id="BtnDeleteRole" th:onclick="'deleteRole(' + ${role.getId()} + ')'" class="btn btn-sm btn-primary">Delete</button></td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Recent Sales End -->
+
+
+        </div>
+    </div>
+    <footer th:include="/user-admin/common/footer::footer"></footer>
+</body>
+
+<script>
+
+    $('#BtnDeleteRole').click(function (e){
+        var id = $('#idRole').val();
+        deleteRole(id);
+    });
+
+
+    function deleteRole(id) {
+        $.ajax({
+            url: '/api/role/'+id,
+            type: 'DELETE',
+            contentType: 'application/json',
+            success: function (result) {
+                console.log(result);
+                window.location.href = "../../static/admin_static/role";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+</script>
+
+</html>

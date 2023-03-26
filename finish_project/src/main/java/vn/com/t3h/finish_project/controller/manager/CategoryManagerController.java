@@ -1,6 +1,8 @@
 package vn.com.t3h.finish_project.controller.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.com.t3h.finish_project.model.dto.CategoryDto;
 import vn.com.t3h.finish_project.service.ICategoryService;
+import vn.com.t3h.finish_project.service.IUserService;
 
 import java.util.List;
 
@@ -18,24 +21,48 @@ public class CategoryManagerController {
     @Autowired
     private ICategoryService iCategoryService;
 
+    @Autowired
+    private IUserService iUserService;
+
     @GetMapping("category-info/{id}")
-    private String getCategoryInfo(Model model, @PathVariable Integer id){
+    private String getCategoryInfo(Model model, @PathVariable Integer id, Authentication authentication){
         CategoryDto dto = iCategoryService.getCategoryById(id);
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        String role = userDetails.getAuthorities().toString();
+        String name = iUserService.findByUserName(username).getFullName();
+        model.addAttribute("name",name);
+        model.addAttribute("role",role);
+
         model.addAttribute("category",dto);
 
-        return "/category-manager/category-info";
+        return "/user-admin/category-manager/category-info";
     }
     @GetMapping("category-info")
-    private String addCategory(Model model){
+    private String addCategory(Model model, Authentication authentication){
         CategoryDto dto = new CategoryDto();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        String role = userDetails.getAuthorities().toString();
+        String name = iUserService.findByUserName(username).getFullName();
+        model.addAttribute("name",name);
+        model.addAttribute("role",role);
         model.addAttribute("category",dto);
-        return "/category-manager/category-info";
+        return "/user-admin/category-manager/category-info";
     }
     @GetMapping
-    private String getCategory(Model model){
+    private String getCategory(Model model, Authentication authentication){
         List<CategoryDto> list = iCategoryService.getCategories();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        String role = userDetails.getAuthorities().toString();
+        String name = iUserService.findByUserName(username).getFullName();
+        model.addAttribute("name",name);
+        model.addAttribute("role",role);
+
         model.addAttribute("categories",list);
-        return "/category-manager/category-list";
+        return "/user-admin/category-manager/category-list";
     }
 
 }

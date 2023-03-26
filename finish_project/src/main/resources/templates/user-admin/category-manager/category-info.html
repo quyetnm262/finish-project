@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/user-admin/common/head::head"></head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+
+    <div th:include="/user-admin/common/sidebar"></div>
+
+    <!-- Content Start -->
+    <div class="content">
+
+        <div th:include="/user-admin/common/nav"></div>
+
+
+        <!-- Form Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-8 col-xl-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <h6 class="mb-4">Basic Form</h6>
+                        <form
+                                id="formSubmit"
+                                th:action="@{/category/category-info}"
+                                th:object="${category}"
+                                role="form"
+                                method="post">
+
+                            <input id="idCategory" name="id" type="hidden" th:field="*{id}">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" name="name" class="form-control" id="name"
+                                       th:field="*{name}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="parentId" class="form-label">parentId</label>
+                                <input type="text" name="name" class="form-control" id="parentId"
+                                       th:field="*{parentId}">
+                            </div>
+
+                            <button type="submit" id="btnAddOrUpdateCategory" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Form End -->
+    </div>
+</div>
+        <footer th:include="/user-admin/common/footer::footer"></footer>
+</body>
+<script>
+    $('#btnAddOrUpdateCategory').click(function (e) {
+        e.preventDefault();
+        var data = {};
+        var formData = $('#formSubmit').serializeArray();
+        $.each(formData, function (i, v) {
+            data[""+v.name+""] = v.value;
+        });
+        var id = $('#idCategory').val();
+        if (id == "") {
+            addCategory(data);
+        } else {
+            updateCategory(data);
+        }
+    });
+
+    function addCategory(data) {
+        $.ajax({
+            url: '/api/category',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                window.location.href = "/category";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function updateCategory(data) {
+        $.ajax({
+            url: '/api/category',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                window.location.href = "/category";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+</html>

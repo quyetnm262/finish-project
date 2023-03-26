@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/user-admin/common/head::head"></head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <div th:include="/user-admin/common/sidebar"></div>
+
+    <!-- Content Start -->
+    <div class="content">
+
+        <div th:include="/user-admin/common/nav"></div>
+
+
+
+        <!-- Recent Sales Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <a class="btn btn-sm btn-primary" th:href="@{/category/category-info}">Add new category</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Parent Category Id</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="category : ${categories}">
+                            <td id="idCategory" th:text="${category.id}"></td>
+                            <td th:text="${category.name}"></td>
+                            <td th:text="${category.parentId}"></td>
+                            <td><a class="btn btn-sm btn-primary" th:href="@{/category/category-info/{id}(id=${category.getId()})}">Detail</a></td>
+                            <td><button th:onclick="'deleteCategory(' + ${category.getId()} + ')'" class="btn btn-sm btn-primary">Delete</button></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Recent Sales End -->
+
+    </div>
+</div>
+        <footer th:include="/user-admin/common/footer::footer"></footer>
+</body>
+
+<script>
+
+    $('#BtnDeleteProduct').click(function (e){
+        var id = $('#idCategory').val();
+        deleteCategory(id);
+    });
+
+
+    function deleteCategory(id) {
+        $.ajax({
+            url: '/api/category/'+id,
+            type: 'DELETE',
+            contentType: 'application/json',
+            success: function (result) {
+                console.log(result);
+                window.location.href = "/category";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+</script>
+
+</html>

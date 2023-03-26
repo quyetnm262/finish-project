@@ -20,6 +20,15 @@ public class UserEntity extends BaseEntity{
     @Column(name = "email")
     private String email;
 
+    public UserEntity(String username, String password, List<RoleEntity> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public UserEntity() {
+    }
+
     @Column(name = "birthday")
     private Date birthday;
 
@@ -29,7 +38,7 @@ public class UserEntity extends BaseEntity{
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

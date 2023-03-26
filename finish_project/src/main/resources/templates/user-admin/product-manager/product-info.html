@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/user-admin/common/head::head"></head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+
+    <div th:include="/user-admin/common/sidebar"></div>
+
+    <!-- Content Start -->
+    <div class="content">
+
+        <div th:include="/user-admin/common/nav"></div>
+
+
+        <!-- Form Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-8 col-xl-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <h6 class="mb-4">Basic Form</h6>
+                        <form
+                                id="formSubmit"
+                                th:action="@{/product/product-info}"
+                                th:object="${product}"
+                                role="form"
+                                method="post">
+
+                            <input id="idProduct" name="id" type="hidden" th:field="*{id}">
+                            <div class="mb-3">
+                                <label for="productCode" class="form-label">Product code</label>
+                                <input type="text" name="productCode" class="form-control" id="productCode"
+                                       th:field="*{productCode}">
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                       th:field="*{title}">
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" name="name" class="form-control" id="name"
+                                       th:field="*{name}">
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="categoryId" class="form-label">Category Id</label>
+                                <input type="number" name="categoryId" class="form-control" id="categoryId"
+                                       th:field="*{categoryId}">
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="shortDescription" class="form-label">Short Description</label>
+                                <input type="text" name="shortDescription" class="form-control" id="shortDescription"
+                                       th:field="*{shortDescription}">
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <input type="text" name="description" class="form-control" id="description"
+                                       th:field="*{description}">
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="oldPrice" class="form-label">Old price</label>
+                                <input type="number" name="oldPrice" class="form-control" id="oldPrice"
+                                       th:field="*{oldPrice}">
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Price</label>
+                                <input type="number" name="price" class="form-control" id="price"
+                                       th:field="*{price}">
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="avatar" class="form-label">Avatar</label>
+                                <input type="text" name="avatarUrl" class="form-control" id="avatar"
+                                       th:field="*{avatarUrl}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="text" name="image" class="form-control" id="image"
+                                       th:field="*{image}">
+                            </div>
+                            <button type="submit" id="btnAddOrUpdateProduct" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Form End -->
+    </div>
+</div>
+        <footer th:include="/user-admin/common/footer::footer"></footer>
+</body>
+<script>
+    $('#btnAddOrUpdateProduct').click(function (e) {
+        e.preventDefault();
+        var data = {};
+        var formData = $('#formSubmit').serializeArray();
+        $.each(formData, function (i, v) {
+            data[""+v.name+""] = v.value;
+        });
+        var id = $('#idProduct').val();
+        if (id == "") {
+            addProduct(data);
+        } else {
+            updateProduct(data);
+        }
+    });
+
+    function addProduct(data) {
+        $.ajax({
+            url: '/api/product',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                window.location.href = "/product";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function updateProduct(data) {
+        $.ajax({
+            url: '/api/product',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                window.location.href = "/product";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+</html>
