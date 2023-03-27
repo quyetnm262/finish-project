@@ -21,8 +21,8 @@
                         <h6 class="mb-4">Basic Form</h6>
                         <form
                                 id="formSubmit"
-                                th:action="@{admin_static}"
-                                th:object="${role}"
+                                th:action="@{admin/role/role-info}"
+                                th:object="${roleDto}"
                                 role="form"
                                 method="post">
 
@@ -70,7 +70,7 @@
             dataType: 'json',
             success: function (result) {
                 console.log(result);
-                window.location.href = "../../static/admin_static/role";
+                window.location.href = "/admin/role";
             },
             error: function (error) {
                 console.log(error);
@@ -87,7 +87,7 @@
             dataType: 'json',
             success: function (result) {
                 console.log(result);
-                window.location.href = "../../static/admin_static/role";
+                window.location.href = "/admin/role";
             },
             error: function (error) {
                 console.log(error);

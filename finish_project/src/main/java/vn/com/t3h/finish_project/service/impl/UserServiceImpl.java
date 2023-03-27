@@ -4,11 +4,15 @@ package vn.com.t3h.finish_project.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import vn.com.t3h.finish_project.entity.RoleEntity;
+import vn.com.t3h.finish_project.entity.ShoppingCartEntity;
 import vn.com.t3h.finish_project.entity.UserEntity;
 import vn.com.t3h.finish_project.model.dto.UserDto;
 import vn.com.t3h.finish_project.repository.RoleRepository;
+import vn.com.t3h.finish_project.repository.ShoppingCartRepository;
 import vn.com.t3h.finish_project.repository.UserRepository;
 import vn.com.t3h.finish_project.service.IUserService;
 import vn.com.t3h.finish_project.utils.DateUtil;
@@ -30,6 +34,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
     /*------------Inject end-------------*/
     @Override
@@ -56,7 +63,11 @@ public class UserServiceImpl implements IUserService {
     public UserDto createUser(UserDto userDto) {
 
         UserEntity userEntity = userDtoToEntity(userDto);
-        userEntity = userRepository.save(userEntity);
+        userEntity = userRepository.save(userEntity); // save userEntity first
+        ShoppingCartEntity shoppingCart = new ShoppingCartEntity();
+        shoppingCart.setUser(userEntity);
+        shoppingCartRepository.save(shoppingCart);
+        userEntity.setShoppingCart(shoppingCart);
         return userEntityToDto(userEntity);
     }
 
@@ -94,10 +105,11 @@ public class UserServiceImpl implements IUserService {
             }
         }
 
-        if (entity.getRoles() != null){
-            String [] roleNames = entity.getRoles().stream().map(RoleEntity::getName)
-                    .toArray(String[]::new);
-            dto.setRoleNames(roleNames);
+        if (entity.getRole() != null){
+            dto.setRoleName(entity.getRole().getName());
+        }
+        if (entity.getShoppingCart() != null){
+            dto.setShoppingCartId(entity.getShoppingCart().getId());
         }
 
         return dto;
@@ -113,15 +125,12 @@ public class UserServiceImpl implements IUserService {
             }
         }
 
-        if (dto.getRoleNames() != null){
-            List<RoleEntity> entityList = new ArrayList<>();
-            List<String> roleNames = Arrays.asList(dto.getRoleNames());
-            roleNames.forEach(roleName ->{
-                RoleEntity roleEntity = roleRepository.findByName(roleName);
-                entityList.add(roleEntity);
-            });
-            entity.setRoles(entityList);
-
+        if (dto.getRoleName() != null){
+            RoleEntity role = roleRepository.findByName(dto.getRoleName());
+            entity.setRole(role);
+        }
+        if (dto.getShoppingCartId() != null){
+            entity.setShoppingCart(shoppingCartRepository.findById(dto.getShoppingCartId()).get());
         }
 
         return entity;
@@ -129,4 +138,22 @@ public class UserServiceImpl implements IUserService {
 
     /*----------Converter end-------------------*/
 
+    @Override
+    public String getFullName(Authentication authentication){
+        if (authentication != null){
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            return findByUserName(username).getFullName();
+        }
+        return null;
+    }
+
+    @Override
+    public String getRole(Authentication authentication) {
+        if (authentication != null){
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return userDetails.getAuthorities().toString();
+        }
+        return null;
+    }
 }

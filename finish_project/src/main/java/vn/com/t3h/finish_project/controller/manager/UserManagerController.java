@@ -27,10 +27,8 @@ public class UserManagerController {
     @GetMapping("/user-info/{id}")
     private String getUserInfo(Model model, @PathVariable Integer id, Authentication authentication){
         UserDto dto = iUserService.getUserById(id);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String role = iUserService.getRole(authentication);
+        String name = iUserService.getFullName(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("user",dto);
@@ -39,10 +37,8 @@ public class UserManagerController {
     @GetMapping("/user-info")
     private String detailUser(Model model, Authentication authentication){
         UserDto dto = new UserDto();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String role = iUserService.getRole(authentication);
+        String name = iUserService.getFullName(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("user",dto);
@@ -51,10 +47,8 @@ public class UserManagerController {
     @GetMapping
     private String getUsers(Model model, Authentication authentication){
         List<UserDto> list = iUserService.getUsers();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String role = iUserService.getRole(authentication);
+        String name = iUserService.getFullName(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("users",list);

@@ -49,6 +49,8 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/admin/user/**","/product/**","/category/**").hasAnyRole("Admin")
                 .antMatchers("/admin/user/**","/product/**","/category/**").authenticated()
+                .antMatchers("/cart").hasAnyRole("User")
+                .antMatchers("/cart").authenticated()
                 .antMatchers("/","/home","/products/**","/login","/logout","/register").permitAll()
                 .anyRequest().authenticated()
                 .and()

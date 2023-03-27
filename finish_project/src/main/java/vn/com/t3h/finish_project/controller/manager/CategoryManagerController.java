@@ -28,10 +28,8 @@ public class CategoryManagerController {
     private String getCategoryInfo(Model model, @PathVariable Integer id, Authentication authentication){
         CategoryDto dto = iCategoryService.getCategoryById(id);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
 
@@ -42,10 +40,8 @@ public class CategoryManagerController {
     @GetMapping("category-info")
     private String addCategory(Model model, Authentication authentication){
         CategoryDto dto = new CategoryDto();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("category",dto);
@@ -54,10 +50,8 @@ public class CategoryManagerController {
     @GetMapping
     private String getCategory(Model model, Authentication authentication){
         List<CategoryDto> list = iCategoryService.getCategories();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
 

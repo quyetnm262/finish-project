@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import vn.com.t3h.finish_project.entity.CategoryEntity;
 import vn.com.t3h.finish_project.entity.ProductEntity;
@@ -43,14 +45,6 @@ public class ProductServiceImpl implements IProductService {
         return productDtoList;
     }
 
-//    @Override
-//    public Page<ProductEntity> pageProducts(int index) {
-//
-//        Pageable pageable = PageRequest.of(index,5);
-//        Page<ProductEntity> productEntityPage = productRepository.pageProduct(pageable);
-//
-//        return productEntityPage;
-//    }
 
     @Override
     public List<ProductDto> getProductsByCategoryId(Integer categoryId) {
@@ -120,6 +114,8 @@ public class ProductServiceImpl implements IProductService {
     }
 
     /*----------Converter end-------------------*/
+
+
 
 
 }

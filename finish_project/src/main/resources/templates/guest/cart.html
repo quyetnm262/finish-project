@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:include="/guest/common/header::head">
+</head>
+
+
+<body>
+<header th:include="/guest/common/navigation::header">
+</header>
+
+    <!-- Page Content -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 style="color: white">Cart</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<section class="h-100 h-custom" style="background-color: #d2c9ff;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-8">
+                                <div class="p-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                        <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                                    </div>
+                                    <hr class="my-4">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div th:if="${NoItem}" class="text-center alert-warning">
+                                                <p th:text="${NoItem}"></p>
+                                            </div>
+                                            <div class="table-main table-responsive" th:if="${NoItem == null}">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Images</th>
+                                                        <th>Product Name</th>
+                                                        <th>Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Total</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="cartItem : ${shoppingCart.cartItem}">
+                                                        <td class="thumbnail-img">
+                                                            <a href="#">
+                                                                <img class="img-fluid"
+                                                                     th:src="*{'data:image/jpeg;base64,' + cartItem.product.image}" alt=""/>
+                                                            </a>
+                                                        </td>
+                                                        <td class="name-pr">
+                                                            <p th:text="${cartItem.product.name}"></p>
+                                                        </td>
+                                                        <td class="price-pr">
+                                                            <p th:text="'$' + ${cartItem.product.price}"></p>
+                                                        </td>
+                                                        <form th:action="@{/update-cart}" method="post">
+                                                            <input type="hidden" name="id" th:value="${cartItem.product.id}">
+                                                            <td class="quantity-box"><input type="number" size="4" th:value="${cartItem.quantity}"
+                                                                                            name="quantity" min="0" step="1"
+                                                                                            class="c-input-text qty text"></td>
+                                                            <td class="total-pr">
+                                                                <p th:text="'$' + ${cartItem.totalPrice}"></p>
+                                                            </td>
+                                                            <td class="remove-pr">
+                                                                <button type="submit" name="action" value="update" title="Update"
+                                                                        class="btn btn-primary">Update
+                                                                </button>
+
+                                                                <button type="submit" name="action" value="delete" title="Delete"
+                                                                        class="btn btn-warning">Delete
+                                                                </button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <hr class="my-4">
+
+                                    <div class="pt-5">
+                                        <h6 class="mb-0"><a th:href="@{/products}" class="text-body"><i
+                                                class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 bg-grey">
+                                <div class="p-5">
+                                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                                    <hr class="my-4">
+
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <h5 class="text-uppercase">Total price</h5>
+                                        <h5 th:text="${totalPrice}"></h5>
+                                    </div>
+
+                                    <button type="button" class="btn btn-dark btn-block btn-lg"
+                                            data-mdb-ripple-color="dark">Checkout</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:include="/guest/common/footer::footer"></footer>
+  </body>
+</html>

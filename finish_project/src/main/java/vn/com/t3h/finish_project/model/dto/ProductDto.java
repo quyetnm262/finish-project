@@ -6,7 +6,7 @@ import lombok.Data;
 public class ProductDto extends AbtractDto{
 
     private String productCode;
-    private String avatarUrl;
+    private String avatar;
     private String image;
     private Double price;
     private Double oldPrice;

@@ -25,10 +25,8 @@ public class ProductManagerController {
     @GetMapping("/product-info/{id}")
     private String getProductInfo(Model model, @PathVariable Integer id, Authentication authentication){
         ProductDto dto = iProductService.getProductById(id);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("product",dto);
@@ -38,10 +36,8 @@ public class ProductManagerController {
     @GetMapping("/product-info")
     private String detailProduct(Model model, Authentication authentication){
         ProductDto dto = new ProductDto();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("product",dto);
@@ -50,10 +46,8 @@ public class ProductManagerController {
     @GetMapping
     private String getProduct(Model model, Authentication authentication){
         List<ProductDto> list = iProductService.getProducts();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("products",list);

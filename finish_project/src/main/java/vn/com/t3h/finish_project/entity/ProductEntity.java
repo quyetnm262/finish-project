@@ -17,8 +17,8 @@ public class ProductEntity extends BaseEntity{
     @Column(name = "productCode")
     private String productCode;
 
-    @Column(name = "avatarUrl")
-    private String avatarUrl;
+    @Column(name = "avatar")
+    private String avatar;
 
     @Column(name = "image")
     private String image;

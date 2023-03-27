@@ -28,35 +28,29 @@ public class RoleManagerController {
     @GetMapping("/role-info/{id}")
     private String getRoleInfo(Model model, @PathVariable Integer id, Authentication authentication){
         RoleDto dto = iRoleService.getRoleById(id);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
-        model.addAttribute("role",dto);
+        model.addAttribute("roleDto",dto);
 
         return "/user-admin/role-manager/role-info";
     }
     @GetMapping("/role-info")
     private String detailRole(Model model, Authentication authentication){
         RoleDto dto = new RoleDto();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
-        model.addAttribute("role",dto);
+        model.addAttribute("roleDto",dto);
         return "/user-admin/role-manager/role-info";
     }
     @GetMapping
     private String getRoles(Model model, Authentication authentication){
         List<RoleDto> list = iRoleService.getRoles();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String role = userDetails.getAuthorities().toString();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("roles",list);

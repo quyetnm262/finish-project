@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import vn.com.t3h.finish_project.entity.UserEntity;
 import vn.com.t3h.finish_project.repository.UserRepository;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class UserServiceConfig implements UserDetailsService {
@@ -25,8 +26,7 @@ public class UserServiceConfig implements UserDetailsService {
         }
         return new User(user.getUsername(),
                 user.getPassword(),
-                user.getRoles()
-                        .stream()
-                        .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
+                Collections.singleton(new SimpleGrantedAuthority(user.getRole().getName())));
+
     }
 }

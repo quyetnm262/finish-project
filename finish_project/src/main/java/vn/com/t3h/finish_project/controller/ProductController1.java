@@ -33,9 +33,8 @@ public class ProductController1 {
         List<ProductDto> productDtos = iProductService.getProducts();
         List<CategoryDto> categoryDtos = iCategoryService.getCategories();
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
+        model.addAttribute("name",name);
         model.addAttribute("name",name);
 
         model.addAttribute("categorys",categoryDtos);
@@ -49,9 +48,7 @@ public class ProductController1 {
         CategoryDto categoryDto = iCategoryService.getCategoryById(categoryId);
         List<CategoryDto> categoryDtos = iCategoryService.getCategories();
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
         model.addAttribute("name",name);
 
         model.addAttribute("categorys",categoryDtos);
@@ -66,9 +63,7 @@ public class ProductController1 {
         model.addAttribute("categorys",categoryDtos);
         ProductDto productDto = iProductService.getProductByName(productName);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        String name = iUserService.findByUserName(username).getFullName();
+        String name = iUserService.getFullName(authentication);
         model.addAttribute("name",name);
 
         model.addAttribute("product",productDto);

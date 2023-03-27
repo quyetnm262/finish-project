@@ -20,10 +20,10 @@ public class UserEntity extends BaseEntity{
     @Column(name = "email")
     private String email;
 
-    public UserEntity(String username, String password, List<RoleEntity> roles) {
+    public UserEntity(String username, String password, RoleEntity role) {
         this.username = username;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }
 
     public UserEntity() {
@@ -38,10 +38,11 @@ public class UserEntity extends BaseEntity{
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<RoleEntity> roles = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private RoleEntity role;
+
+    @OneToOne(mappedBy = "user")
+    private ShoppingCartEntity shoppingCart;
 
 }

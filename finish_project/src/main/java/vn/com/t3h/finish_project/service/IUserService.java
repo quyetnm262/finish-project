@@ -1,6 +1,7 @@
 package vn.com.t3h.finish_project.service;
 
 
+import org.springframework.security.core.Authentication;
 import vn.com.t3h.finish_project.entity.UserEntity;
 import vn.com.t3h.finish_project.model.dto.UserDto;
 
@@ -20,5 +21,9 @@ public interface IUserService {
 
     void deleteUser(Integer id);
     void save(UserDto userDto);
+
+    String getFullName(Authentication authentication);
+
+    String getRole(Authentication authentication);
 
 }
