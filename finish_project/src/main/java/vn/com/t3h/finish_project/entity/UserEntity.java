@@ -45,4 +45,16 @@ public class UserEntity extends BaseEntity{
     @OneToOne(mappedBy = "user")
     private ShoppingCartEntity shoppingCart;
 
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "Id='" + super.getId() + '\'' +
+                "fullName='" + fullName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
 }

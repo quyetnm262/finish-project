@@ -10,7 +10,9 @@ import vn.com.t3h.finish_project.repository.CartItemRepository;
 import vn.com.t3h.finish_project.repository.ShoppingCartRepository;
 import vn.com.t3h.finish_project.service.IShoppingCartService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -30,11 +32,11 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         if (cart == null){
             cart = new ShoppingCartEntity();
         }
-        Set<CartItemEntity> cartItemEntities = cart.getCartItem();
+        List<CartItemEntity> cartItemEntities = cart.getCartItem();
         CartItemEntity cartItem = findCartItem(cartItemEntities, product.getId());
 
         if (cartItemEntities == null){
-            cartItemEntities = new HashSet<>();
+            cartItemEntities = new ArrayList<>();
             if (cartItem == null){
                 buildCartItem(product, quantity, cart, cartItemEntities);
 
@@ -61,7 +63,51 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         return shoppingCartRepository.save(cart);
     }
 
-    private void buildCartItem(ProductEntity product, Integer quantity, ShoppingCartEntity cart, Set<CartItemEntity> cartItemEntities) {
+    @Override
+    public ShoppingCartEntity updateItem(ProductEntity product, int quantity, UserEntity user) {
+        ShoppingCartEntity cart = user.getShoppingCart();
+
+        List<CartItemEntity> cartItems = cart.getCartItem();
+
+        CartItemEntity item = findCartItem(cartItems, product.getId());
+
+        item.setQuantity(quantity);
+        item.setTotalPrice(quantity * product.getPrice());
+
+        cartItemRepository.save(item);
+
+        int totalItems = totalItems(cartItems);
+        double totalPrice = totalPrice(cartItems);
+
+        cart.setTotalItems(totalItems);
+        cart.setTotalPrices(totalPrice);
+
+        return shoppingCartRepository.save(cart);
+    }
+
+    @Override
+    public ShoppingCartEntity deleteItem(ProductEntity product, UserEntity user) {
+        ShoppingCartEntity cart = user.getShoppingCart();
+
+        List<CartItemEntity> cartItems = cart.getCartItem();
+
+        CartItemEntity item = findCartItem(cartItems, product.getId());
+
+        cartItems.remove(item);
+
+        cartItemRepository.delete(item);
+
+        double totalPrice = totalPrice(cartItems);
+        int totalItems = totalItems(cartItems);
+
+        cart.setCartItem(cartItems);
+        cart.setTotalItems(totalItems);
+        cart.setTotalPrices(totalPrice);
+
+        return shoppingCartRepository.save(cart);
+    }
+
+    private void buildCartItem(ProductEntity product, Integer quantity, ShoppingCartEntity cart, List<CartItemEntity> cartItemEntities) {
         CartItemEntity cartItem;
         cartItem = new CartItemEntity();
         cartItem.setQuantity(quantity);
@@ -73,7 +119,7 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         cartItemRepository.save(cartItem);
     }
 
-    private CartItemEntity findCartItem(Set<CartItemEntity> cartItems, Integer productId) {
+    private CartItemEntity findCartItem(List<CartItemEntity> cartItems, Integer productId) {
         if (cartItems == null) {
             return null;
         }
@@ -87,7 +133,7 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         return cartItem;
     }
 
-    private int totalItems(Set<CartItemEntity> cartItems){
+    private int totalItems(List<CartItemEntity> cartItems){
         int totalItems = 0;
         for(CartItemEntity item : cartItems){
             totalItems += item.getQuantity();
@@ -95,7 +141,7 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         return totalItems;
     }
 
-    private double totalPrice(Set<CartItemEntity> cartItems){
+    private double totalPrice(List<CartItemEntity> cartItems){
         double totalPrice = 0.0;
 
         for(CartItemEntity item : cartItems){

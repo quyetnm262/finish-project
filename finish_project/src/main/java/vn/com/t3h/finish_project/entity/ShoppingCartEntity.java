@@ -1,8 +1,10 @@
 package vn.com.t3h.finish_project.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +22,12 @@ public class ShoppingCartEntity {
     private UserEntity user;
 
     @OneToMany(mappedBy = "cart")
-    private Set<CartItemEntity> cartItem;
+    private List<CartItemEntity> cartItem;
 
-
+    @Override
+    public String toString() {
+        return "ShoppingCartEntity{" +
+                "id=" + id +
+                '}';
+    }
 }

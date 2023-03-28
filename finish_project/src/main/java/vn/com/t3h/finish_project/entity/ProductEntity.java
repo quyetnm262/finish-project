@@ -1,7 +1,6 @@
 package vn.com.t3h.finish_project.entity;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -42,15 +41,27 @@ public class ProductEntity extends BaseEntity{
     @Column(name = "description")
     private String description;
 
+    @OneToOne(mappedBy = "product")
+    private CartItemEntity cartItem;
+
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
-    public Integer getCategoryId() {
-        if (category != null) {
-            return category.getId();
-        }
-        return null;
+    @Override
+    public String toString() {
+        return "ProductEntity{" +
+                "Id='" + super.getId() + '\'' +
+                "productCode='" + productCode + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", image='" + image + '\'' +
+                ", price=" + price +
+                ", oldPrice=" + oldPrice +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
-
 }

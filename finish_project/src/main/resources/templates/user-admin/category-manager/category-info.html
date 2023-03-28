@@ -22,7 +22,6 @@
                         <h6 class="mb-4">Basic Form</h6>
                         <form
                                 id="formSubmit"
-                                th:action="@{/category/category-info}"
                                 th:object="${category}"
                                 role="form"
                                 method="post">
@@ -34,9 +33,15 @@
                                        th:field="*{name}">
                             </div>
                             <div class="mb-3">
-                                <label for="parentId" class="form-label">parentId</label>
-                                <input type="text" name="name" class="form-control" id="parentId"
-                                       th:field="*{parentId}">
+                                <label for="parentId" class="form-label">Parent Id</label>
+<!--                                <input type="text" name="name" class="form-control" id="parentId"-->
+<!--                                       th:field="*{parentId}">-->
+                                <div>
+                                    <select id="parentId" th:field="*{parentId}" class="form-select" aria-label="Default select example">
+                                        <option th:each="categori : ${categories}" th:value="${categori.id}" th:text="${categori.name}"></option>
+                                    </select>
+
+                                </div>
                             </div>
 
                             <button type="submit" id="btnAddOrUpdateCategory" class="btn btn-primary">Submit</button>
@@ -75,7 +80,7 @@
             dataType: 'json',
             success: function (result) {
                 console.log(result);
-                window.location.href = "/category";
+                window.location.href = "/admin/category";
             },
             error: function (error) {
                 console.log(error);
@@ -92,7 +97,7 @@
             dataType: 'json',
             success: function (result) {
                 console.log(result);
-                window.location.href = "/category";
+                window.location.href = "/admin/category";
             },
             error: function (error) {
                 console.log(error);

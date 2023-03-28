@@ -22,5 +22,12 @@ public class CartItemEntity {
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
-
+    @Override
+    public String toString() {
+        return "CartItemEntity{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }

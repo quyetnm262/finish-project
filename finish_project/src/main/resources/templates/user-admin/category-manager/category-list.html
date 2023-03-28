@@ -18,7 +18,7 @@
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <a class="btn btn-sm btn-primary" th:href="@{/category/category-info}">Add new category</a>
+                    <a class="btn btn-sm btn-primary" th:href="@{/admin/category/category-info}">Add new category</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -36,7 +36,7 @@
                             <td id="idCategory" th:text="${category.id}"></td>
                             <td th:text="${category.name}"></td>
                             <td th:text="${category.parentId}"></td>
-                            <td><a class="btn btn-sm btn-primary" th:href="@{/category/category-info/{id}(id=${category.getId()})}">Detail</a></td>
+                            <td><a class="btn btn-sm btn-primary" th:href="@{/admin/category/category-info/{id}(id=${category.getId()})}">Detail</a></td>
                             <td><button th:onclick="'deleteCategory(' + ${category.getId()} + ')'" class="btn btn-sm btn-primary">Delete</button></td>
                         </tr>
 
@@ -67,7 +67,7 @@
             contentType: 'application/json',
             success: function (result) {
                 console.log(result);
-                window.location.href = "/category";
+                window.location.href = "/admin/category";
             },
             error: function (error) {
                 console.log(error);

@@ -1,4 +1,4 @@
-package vn.com.t3h.finish_project.config;
+package vn.com.t3h.finish_project.config.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;

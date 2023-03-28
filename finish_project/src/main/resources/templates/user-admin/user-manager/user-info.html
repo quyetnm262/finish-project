@@ -20,7 +20,6 @@
                         <h6 class="mb-4">Basic Form</h6>
                         <form
                                 id="formSubmit"
-                                th:action="@{admin/user/user-info}"
                                 th:object="${user}"
                                 role="form"
                                 method="post">
@@ -34,8 +33,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="gender" class="form-label">Gender</label>
-                                <input type="text" name="gender" class="form-control" id="gender"
-                                       th:field="*{gender}">
+                            <div>
+                                <select id="gender" th:field="*{gender}" class="form-select" aria-label="Default select example">
+                                    <option th:value="'Male'" th:text="Male"></option>
+                                    <option th:value="'FeMale'" th:text="Female"></option>
+                                </select>
+
+                            </div>
+
 
                             </div>
                             <div class="mb-3">
@@ -52,8 +57,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control" id="username"
-                                       th:field="*{username}">
+                                <div th:if="*{username == null} ">
+                                    <input type="text" name="username" class="form-control" id="username1"
+                                           th:field="*{username}">
+                                </div>
+                                <div th:if="*{username != null} ">
+                                    <input disabled type="text" name="username" class="form-control" id="username"
+                                           th:field="*{username}">
+                                </div>
 
                             </div>
                             <div class="mb-3">
@@ -63,11 +74,18 @@
 
                             </div>
                             <div class="mb-3">
-                                <label for="roleNames" class="form-label">roleName</label>
-                                <input type="text" name="roleNames" class="form-control" id="roleNames"
-                                       th:field="*{roleName}">
+                                <label for="roleName" class="form-label">Role Name</label>
+                                <div>
+                                    <select  id="roleName" th:field="*{roleName}" class="form-select" aria-label="Default select example">
+                                        <option th:value="'User'" th:text="User"></option>
+                                        <option th:value="'Admin'" th:text="Admin"></option>
+
+                                    </select>
+                                </div>
+
 
                             </div>
+
 
                             <button type="submit" id="btnAddOrUpdateUser" class="btn btn-primary">Submit</button>
                         </form>

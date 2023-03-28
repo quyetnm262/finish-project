@@ -2,21 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head th:include="/guest/common/header::head"></head>
-  <body>
-  <header th:include="/guest/common/navigation::header"></header>
+<head th:include="/guest/common/header"></head>
 
-    <!-- Page Content -->
-    <div class="page-heading header-text">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
 
-            <h1 style="color: white">Products</h1>
-          </div>
+<body>
+<header th:include="/guest/common/navigation"></header>
+
+<!-- Page Content -->
+  <div class="page-heading header-text" id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 style="color: white" >Products</h1>
+
         </div>
       </div>
     </div>
+  </div>
 
     <div class="services">
       <div class="container">
@@ -60,21 +62,13 @@
         </div>
 
         <br>
-        <br>
 
-        <nav>
-          <ul id="pagination" class="pagination pagination-lg justify-content-center"></ul>
-        </nav>
-
-        <br>
-        <br>
-        <br>
-        <br>
       </div>
+    </div>
     </div>
 
     <!-- Footer Starts Here -->
-<footer th:include="/guest/common/footer::footer"></footer>
+<footer th:include="/guest/common/footer"></footer>
     
 
 

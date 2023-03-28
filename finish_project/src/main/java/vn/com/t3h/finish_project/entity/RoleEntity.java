@@ -16,4 +16,12 @@ public class RoleEntity extends BaseEntity{
 
     @OneToMany(mappedBy = "role",fetch = FetchType.EAGER)
     private List<UserEntity> users = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "RoleEntity{" +
+                "Id='" + super.getId() + '\'' +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

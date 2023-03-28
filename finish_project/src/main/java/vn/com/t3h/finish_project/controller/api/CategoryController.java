@@ -19,24 +19,6 @@ public class CategoryController {
 
     /*----------Inject end-------------------*/
 
-    @GetMapping
-    public ResponseEntity<?> getListCategory(){
-        return ResponseEntity.ok(BaseResponse.builder()
-                .message(HttpStatus.OK.name())
-                .messageCode(HttpStatus.OK.value())
-                .data(iCategoryService.getCategories())
-                .build());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getCategory(@PathVariable Integer id){
-        return ResponseEntity.ok(BaseResponse.builder()
-                .message(HttpStatus.OK.name())
-                .messageCode(HttpStatus.OK.value())
-                .data(iCategoryService.getCategoryById(id))
-                .build());
-    }
-
     @PostMapping
     public ResponseEntity<?> postCategory(@RequestBody CategoryDto categoryDto){
         return ResponseEntity.ok(BaseResponse.builder()

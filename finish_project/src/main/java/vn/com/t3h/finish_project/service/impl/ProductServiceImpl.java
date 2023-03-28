@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import vn.com.t3h.finish_project.entity.CategoryEntity;
 import vn.com.t3h.finish_project.entity.ProductEntity;
 import vn.com.t3h.finish_project.model.dto.ProductDto;
+import vn.com.t3h.finish_project.repository.CartItemRepository;
 import vn.com.t3h.finish_project.repository.CategoryRepository;
 import vn.com.t3h.finish_project.repository.ProductRepository;
 import vn.com.t3h.finish_project.service.IProductService;
@@ -32,6 +33,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     /*------------Inject end-------------*/
 
@@ -103,13 +107,24 @@ public class ProductServiceImpl implements IProductService {
             categoryEntity = categoryRepository.findCategoryEntitiesById(dto.getCategoryId());
             entity.setCategory(categoryEntity);
         }
+        if (dto.getCartItemId() != null){
+            entity.setCartItem(cartItemRepository.findById(dto.getCartItemId()).get());
+        }
+
         return entity;
 
     }
 
     private ProductDto productEntityToDto(ProductEntity productEntity){
         ProductDto dto = modelMapper.map(productEntity,ProductDto.class);
-        dto.setCategoryId(productEntity.getCategoryId());
+        if (productEntity.getCategory() != null){
+            dto.setCategoryId(productEntity.getCategory().getId());
+        }
+
+        if (productEntity.getCartItem() != null){
+            dto.setCartItemId(productEntity.getCartItem().getId());
+
+        }
         return dto;
     }
 

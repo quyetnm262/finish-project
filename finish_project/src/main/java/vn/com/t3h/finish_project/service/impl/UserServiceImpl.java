@@ -17,8 +17,6 @@ import vn.com.t3h.finish_project.repository.UserRepository;
 import vn.com.t3h.finish_project.service.IUserService;
 import vn.com.t3h.finish_project.utils.DateUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -114,6 +112,7 @@ public class UserServiceImpl implements IUserService {
 
         return dto;
     }
+
 
     public UserEntity userDtoToEntity(UserDto dto){
         UserEntity entity = modelMapper.map(dto, UserEntity.class);

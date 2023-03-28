@@ -15,7 +15,7 @@ import vn.com.t3h.finish_project.service.IUserService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/admin/category")
 public class CategoryManagerController {
 
     @Autowired
@@ -27,12 +27,12 @@ public class CategoryManagerController {
     @GetMapping("category-info/{id}")
     private String getCategoryInfo(Model model, @PathVariable Integer id, Authentication authentication){
         CategoryDto dto = iCategoryService.getCategoryById(id);
-
+        List<CategoryDto> list = iCategoryService.getCategories();
         String name = iUserService.getFullName(authentication);
         String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
-
+        model.addAttribute("categories",list);
         model.addAttribute("category",dto);
 
         return "/user-admin/category-manager/category-info";
@@ -40,11 +40,13 @@ public class CategoryManagerController {
     @GetMapping("category-info")
     private String addCategory(Model model, Authentication authentication){
         CategoryDto dto = new CategoryDto();
+        List<CategoryDto> list = iCategoryService.getCategories();
         String name = iUserService.getFullName(authentication);
         String role = iUserService.getRole(authentication);
         model.addAttribute("name",name);
         model.addAttribute("role",role);
         model.addAttribute("category",dto);
+        model.addAttribute("categories",list);
         return "/user-admin/category-manager/category-info";
     }
     @GetMapping

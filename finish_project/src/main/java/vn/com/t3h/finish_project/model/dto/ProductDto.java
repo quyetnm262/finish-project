@@ -14,5 +14,6 @@ public class ProductDto extends AbtractDto{
     private String title;
     private String shortDescription;
     private String description;
+    private Integer cartItemId;
     private Integer categoryId;
 }

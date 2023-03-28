@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import vn.com.t3h.finish_project.config.handler.CustomAuthenticationSuccessHandler;
+import vn.com.t3h.finish_project.config.handler.RedirectAccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -47,11 +49,10 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
-                .antMatchers("/admin/user/**","/product/**","/category/**","/cart").hasAuthority("Admin")
-                .antMatchers("/cart").hasAuthority("User")
+                .antMatchers("/admin/**","/product/**","/category/**","/cart/**").hasAuthority("Admin")
+                .antMatchers("/cart/**").hasAuthority("User")
                 .antMatchers("/","/home","/products/**","/login","/logout","/register").permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -62,6 +63,9 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(new RedirectAccessDeniedHandler("/login"))
                 .and()
                 .csrf().disable();
     }

@@ -22,7 +22,6 @@
                         <h6 class="mb-4">Basic Form</h6>
                         <form
                                 id="formSubmit"
-                                th:action="@{/product/product-info}"
                                 th:object="${product}"
                                 role="form"
                                 method="post">
@@ -49,8 +48,14 @@
 
                             <div class="mb-3">
                                 <label for="categoryId" class="form-label">Category Id</label>
-                                <input type="number" name="categoryId" class="form-control" id="categoryId"
-                                       th:field="*{categoryId}">
+<!--                                <input type="number" name="categoryId" class="form-control" id="categoryId"-->
+<!--                                       th:field="*{categoryId}">-->
+                                <div>
+                                    <select id="categoryId" th:field="*{categoryId}" class="form-select" aria-label="Default select example">
+                                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                                    </select>
+
+                                </div>
 
                             </div>
                             <div class="mb-3">
@@ -123,7 +128,7 @@
             dataType: 'json',
             success: function (result) {
                 console.log(result);
-                window.location.href = "/product";
+                window.location.href = "/admin/product";
             },
             error: function (error) {
                 console.log(error);

@@ -2,18 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-    <head th:include="/guest/common/header::head"></head>
+    <head th:include="/guest/common/header"></head>
 
 
   <body>
-  <header th:include="/guest/common/navigation::header"></header>
+  <header th:include="/guest/common/navigation"></header>
 
     <!-- Page Content -->
-    <div class="page-heading header-text">
+    <div class="page-heading header-text" id="top">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h1 th:text="${product.getTitle()}"></h1>
+            <h1 style="color: white" th:text="${product.getName()}"></h1>
             <h1>
               <del><span th:text="${product.getOldPrice()}"></span></del>
               <span th:text="${product.getPrice()}"></span>
@@ -40,7 +40,7 @@
           <div class="col-md-5">
             <div class="sidebar-item recent-posts">
               <div class="sidebar-heading">
-                <h4>Info</h4>
+                <h4 th:text="${product.getTitle()}"></h4>
               </div>
 
               <div class="content">
@@ -55,31 +55,19 @@
 
             <br>
 
-            <form action="" method="post">
-              <div class="row">
-                <div class="col-md-6 col-sm-12">
-                  <div class="form-group">
-                    <label for="">Extra 1</label>
-                    <select class="form-control">
-                      <option value="0">Extra A</option>
-                      <option value="0">Extra B</option>
-                      <option value="0">Extra C</option>
-                      <option value="0">Extra D</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+            <form id="formSubmit" th:action="@{/add-to-cart}" method="post">
 
               <div class="row">
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
-                    <label for="">Quantity</label>
-                    <input type="text" value="1" required="" class="form-control">
+                    <input type="hidden" name="productId" th:value="${product.id}" />
+                    <label for="quantity">Quantity</label>
+                    <input id="quantity" type="number" name="quantity" value="1" class="form-control">
                   </div>
                 </div>
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <a href="#"class="filled-button">Add to Cart</a>
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
                   </div>
                 </div>
               </div>
@@ -102,6 +90,7 @@
     </div>
 
 
-    <footer th:include="/guest/common/footer::footer"></footer>
+    <footer th:include="/guest/common/footer"></footer>
   </body>
+
 </html>

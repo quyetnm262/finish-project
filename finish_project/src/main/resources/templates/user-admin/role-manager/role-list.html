@@ -17,7 +17,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <a class="btn btn-sm btn-primary" th:href="@{/role/role-info}">Add new role</a>
+                        <a class="btn btn-sm btn-primary" th:href="@{/admin/role/role-info}">Add new role</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -33,7 +33,7 @@
                                     <td id="idRole" th:text="${role.id}"></td>
                                     <td th:text="${role.name}"></td>
 
-                                    <td><a class="btn btn-sm btn-primary" th:href="@{/role/role-info/{id}(id=${role.getId()})}">Detail</a></td>
+                                    <td><a class="btn btn-sm btn-primary" th:href="@{/admin/role/role-info/{id}(id=${role.getId()})}">Detail</a></td>
                                     <td><button id="BtnDeleteRole" th:onclick="'deleteRole(' + ${role.getId()} + ')'" class="btn btn-sm btn-primary">Delete</button></td>
 
                                 </tr>
