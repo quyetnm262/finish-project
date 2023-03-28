@@ -47,12 +47,11 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
-                .antMatchers("/admin/user/**","/product/**","/category/**").hasAnyRole("Admin")
-                .antMatchers("/admin/user/**","/product/**","/category/**").authenticated()
-                .antMatchers("/cart").hasAnyRole("User")
-                .antMatchers("/cart").authenticated()
+                .antMatchers("/admin/user/**","/product/**","/category/**","/cart").hasAuthority("Admin")
+                .antMatchers("/cart").hasAuthority("User")
                 .antMatchers("/","/home","/products/**","/login","/logout","/register").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")

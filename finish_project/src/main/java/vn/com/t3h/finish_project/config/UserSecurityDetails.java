@@ -1,6 +1,9 @@
 package vn.com.t3h.finish_project.config;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,8 +14,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
 public class UserSecurityDetails implements UserDetails {
     private UserEntity user;
+
+    public UserSecurityDetails(UserEntity user) {
+        this.user = user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();

@@ -20,7 +20,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <a class="btn btn-sm btn-primary" th:href="@{user/user-info}">Add new user</a>
+                        <a class="btn btn-sm btn-primary" th:href="@{/admin/user/user-info}">Add new user</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -44,7 +44,7 @@
                                     <td th:text="${user.birthdayStr}"></td>
                                     <td th:text="${user.username}"></td>
                                     <td th:text="${user.getRoleName()}"></td>
-                                    <td><a class="btn btn-sm btn-primary" th:href="@{user/user-info/{id}(id=${user.getId()})}">Detail</a></td>
+                                    <td><a class="btn btn-sm btn-primary" th:href="@{/admin/user/user-info/{id}(id=${user.getId()})}">Detail</a></td>
                                     <td><button id="BtnDeleteUser" th:onclick="'deleteUser(' + ${user.getId()} + ')'" class="btn btn-sm btn-primary">Delete</button></td>
 
                                 </tr>
@@ -75,7 +75,7 @@
             contentType: 'application/json',
             success: function (result) {
                 console.log(result);
-                window.location.href = "admin/user";
+                window.location.href = "/admin/user";
             },
             error: function (error) {
                 console.log(error);

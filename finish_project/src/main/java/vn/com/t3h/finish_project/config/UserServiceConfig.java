@@ -7,12 +7,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import vn.com.t3h.finish_project.entity.UserEntity;
 import vn.com.t3h.finish_project.repository.UserRepository;
 
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+@Component
 public class UserServiceConfig implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
@@ -24,9 +26,7 @@ public class UserServiceConfig implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException("Could not find username");
         }
-        return new User(user.getUsername(),
-                user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority(user.getRole().getName())));
+        return new UserSecurityDetails(user);
 
     }
 }
