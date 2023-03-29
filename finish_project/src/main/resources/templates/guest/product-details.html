@@ -32,9 +32,6 @@
               <img  th:src="'data:image/png;base64,'+${product.getImage()}" alt="" class="img-fluid wc-image">
             </div>
 
-            <br>
-
-            <br>
           </div>
 
           <div class="col-md-5">
@@ -46,11 +43,12 @@
               <div class="content">
                 <p th:text="${product.getShortDescription()}"></p>
               </div>
+              <div class="content">
+                <del><span th:text="${product.getOldPrice()}"></span></del>
+                <span th:text="${product.getPrice()}"></span>
+              </div>
             </div>
 
-            <br>
-            <br>
-          
             <h4>Add to Cart</h4>
 
             <br>

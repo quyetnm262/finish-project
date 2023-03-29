@@ -34,10 +34,10 @@
                             </div>
                             <div class="mb-3">
                                 <label for="parentId" class="form-label">Parent Id</label>
-<!--                                <input type="text" name="name" class="form-control" id="parentId"-->
-<!--                                       th:field="*{parentId}">-->
+
                                 <div>
                                     <select id="parentId" th:field="*{parentId}" class="form-select" aria-label="Default select example">
+                                        <option value="">New parent</option>
                                         <option th:each="categori : ${categories}" th:value="${categori.id}" th:text="${categori.name}"></option>
                                     </select>
 
