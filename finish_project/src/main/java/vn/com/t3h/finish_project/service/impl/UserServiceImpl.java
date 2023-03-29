@@ -14,6 +14,7 @@ import vn.com.t3h.finish_project.model.dto.UserDto;
 import vn.com.t3h.finish_project.repository.RoleRepository;
 import vn.com.t3h.finish_project.repository.ShoppingCartRepository;
 import vn.com.t3h.finish_project.repository.UserRepository;
+import vn.com.t3h.finish_project.service.IShoppingCartService;
 import vn.com.t3h.finish_project.service.IUserService;
 import vn.com.t3h.finish_project.utils.DateUtil;
 
@@ -35,6 +36,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
+
+    @Autowired
+    private IShoppingCartService iShoppingCartService;
 
     /*------------Inject end-------------*/
     @Override
@@ -80,6 +84,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void deleteUser(Integer id) {
+        Integer cartId = iShoppingCartService.getCartIdByUserId(id);
+        shoppingCartRepository.deleteById(cartId);
         userRepository.deleteById(id);
     }
 

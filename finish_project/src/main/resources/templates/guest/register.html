@@ -19,41 +19,68 @@
                         </div>
                         <form
                                 id="formSubmit"
-                                th:action="@{/register}"
+                                th:object="${userDto}"
                                 role="form"
                                 method="post">
 
+                            <input id="idUser" name="id" type="hidden" th:field="*{id}">
                             <div class="mb-3">
                                 <label for="fullName" class="form-label">Full Name</label>
-                                <input type="text" name="fullName" class="form-control" id="fullName">
+                                <input type="text" name="fullName" class="form-control" id="fullName"
+                                       th:field="*{fullName}">
 
                             </div>
                             <div class="mb-3">
                                 <label for="gender" class="form-label">Gender</label>
-                                <input type="text" name="gender" class="form-control" id="gender">
+                                <div>
+                                    <select id="gender" th:field="*{gender}" class="form-select" aria-label="Default select example">
+                                        <option th:value="'Male'" th:text="Male"></option>
+                                        <option th:value="'FeMale'" th:text="Female"></option>
+                                    </select>
+
+                                </div>
+
 
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" name="email" class="form-control" id="email">
+                                <input type="text" name="email" class="form-control" id="email"
+                                       th:field="*{email}">
 
                             </div>
                             <div class="mb-3">
                                 <label for="birthdayStr" class="form-label">Birth day</label>
-                                <input type="date" name="birthdayStr" class="form-control" id="birthdayStr">
+                                <input type="date" name="birthdayStr" class="form-control" id="birthdayStr"
+                                       th:field="*{birthdayStr}">
 
                             </div>
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control" id="username">
+                                <div th:if="*{username == null} ">
+                                    <input type="text" name="username" class="form-control" id="username"
+                                           th:field="*{username}">
+                                </div>
 
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" id="password">
+                                <input type="text" name="password" class="form-control" id="password"
+                                       th:field="*{password}">
 
                             </div>
-                            <button type="submit" id="btnRegister" class="btn btn-primary">Submit</button>
+                            <div class="mb-3">
+                                <div>
+                                    <select hidden  id="roleName" th:field="*{roleName}" class="form-select" aria-label="Default select example">
+                                        <option selected th:value="'User'" th:text="User"></option>
+
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+
+                            <button type="submit" id="btnAddOrUpdateUser" class="btn btn-primary">Submit</button>
                         </form>
 
                         <p class="text-center mb-0">Already have an Account? <a href="">Sign In</a></p>
@@ -65,35 +92,36 @@
     </div>
         <footer th:include="/user-admin/common/footer"></footer>
 </body>
-<script>
-    $('#btnRegister').click(function (e) {
-        e.preventDefault();
-        var data = {};
-        var formData = $('#formSubmit').serializeArray();
-        $.each(formData, function (i, v) {
-            data[""+v.name+""] = v.value;
-        });
-        data['roleName']=["User"];
-        register(data);
-    });
+<!--<script>-->
+<!--    $('#btnRegister').click(function (e) {-->
+<!--        e.preventDefault();-->
+<!--        var data = {};-->
+<!--        var formData = $('#formSubmit').serializeArray();-->
+<!--        $.each(formData, function (i, v) {-->
+<!--            data[""+v.name+""] = v.value;-->
+<!--        });-->
+<!--        data["roleName"]='User';-->
+<!--        console.log(data);-->
+<!--        addUser(data);-->
+<!--    });-->
 
-    function register(data) {
-        $.ajax({
-            url: '/api/user',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            dataType: 'json',
-            success: function (result) {
-                console.log(result);
-                window.location.href = "/login";
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    }
+<!--    function addUser(data) {-->
+<!--        $.ajax({-->
+<!--            url: '/api/user',-->
+<!--            type: 'POST',-->
+<!--            contentType: 'application/json',-->
+<!--            data: JSON.stringify(data),-->
+<!--            dataType: 'json',-->
+<!--            success: function (result) {-->
+<!--                console.log(result);-->
+<!--                window.location.href = "/login";-->
+<!--            },-->
+<!--            error: function (error) {-->
+<!--                console.log(error);-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
 
-</script>
+<!--</script>-->
 
 </html>

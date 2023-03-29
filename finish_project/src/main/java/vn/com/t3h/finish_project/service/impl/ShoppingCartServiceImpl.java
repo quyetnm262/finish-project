@@ -8,7 +8,9 @@ import vn.com.t3h.finish_project.entity.ShoppingCartEntity;
 import vn.com.t3h.finish_project.entity.UserEntity;
 import vn.com.t3h.finish_project.repository.CartItemRepository;
 import vn.com.t3h.finish_project.repository.ShoppingCartRepository;
+import vn.com.t3h.finish_project.repository.UserRepository;
 import vn.com.t3h.finish_project.service.IShoppingCartService;
+import vn.com.t3h.finish_project.service.IUserService;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +25,9 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
 
     @Autowired
     private CartItemRepository cartItemRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public ShoppingCartEntity addItem(ProductEntity product, Integer quantity, UserEntity user) {
@@ -105,6 +110,13 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         cart.setTotalPrices(totalPrice);
 
         return shoppingCartRepository.save(cart);
+    }
+
+    @Override
+    public Integer getCartIdByUserId(Integer useId) {
+        UserEntity user = userRepository.findById(useId).get();
+
+        return shoppingCartRepository.findByUser(user).getId();
     }
 
     private void buildCartItem(ProductEntity product, Integer quantity, ShoppingCartEntity cart, List<CartItemEntity> cartItemEntities) {
